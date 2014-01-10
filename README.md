@@ -17,7 +17,7 @@ return array(
 ```
 
 ## Configuration files
-Copy `zf-annotated-forms-global.dist.php` to your application configuration autoload directory.
+Copy `module.zf-annotated-forms-global.dist.php` to your application configuration autoload directory.
 You can adjust this file and set the default values. The `annotated_forms` can also be declared in your module config.
 
 
