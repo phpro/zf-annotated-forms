@@ -9,7 +9,8 @@ return array(
             'initializers' => array(),
             'listeners' => array(),
             'cache' => null,
-            'className' => '',
+            'cache_key' => '',
+            'entity' => '',
         ),
     ),
 
