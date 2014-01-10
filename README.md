@@ -6,7 +6,7 @@
 ```
 
 ## Add to application config
-```
+```php
 return array(
     'modules' => array(
         'Phpro\\AnnotatedForms',
@@ -22,7 +22,7 @@ You can adjust this file and set the default values. The `annotated_forms` can a
 
 
 ### Form configuration
-```
+```php
 return array(
     'annotated_forms' => array(
         'form-key' => array(
@@ -36,27 +36,27 @@ return array(
 );
 ```
 
-Initializers:
+`initializers`:
 Array of service manager keys, which return InitializerInterfaces. These initializers are used to inject dependencies in form elements.
 
-Listeners:
+`listeners`:
 Array of service manager keys, which return EventListenerAggregateInterface. These listeners can be used to adjust the form.
 
-Cache:
+`cache`:
 Service manager key, which return Cache\StorageInterface. This cache storage is used to save parsed annotations.
 This can be left `null` if you do not want to be using cache.
 
-Cache_key:
+`cache_key`:
 The cache key where the parsed configuration is being saved in the cache locator.
 This can be left `null` if you do not want to be using cache.
 
-Entity:
+`entity`:
 The name of the class which contains the form annotations.
 
 
 ### Load the form
 You can now use the serviceManager to retrieve your form. In the config example above, you can use:
 
-```
+```php
 $serviceManager->get('form-key');
 ```
