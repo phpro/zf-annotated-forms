@@ -2,7 +2,7 @@
 
 namespace Phpro\AnnotatedForms\Service;
 
-use Phpro\AnnotatedForms\Configuration\Configuration;
+use Phpro\AnnotatedForms\Options\Configuration;
 use Phpro\AnnotatedForms\Exception\RuntimeException;
 use Zend\Cache\Storage\StorageInterface;
 use Zend\EventManager\ListenerAggregateInterface;

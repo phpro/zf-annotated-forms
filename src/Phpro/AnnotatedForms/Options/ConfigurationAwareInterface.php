@@ -1,22 +1,22 @@
 <?php
 
-namespace Phpro\AnnotatedForms\Configuration;
+namespace Phpro\AnnotatedForms\Options;
 
 /**
  * Interface ConfigurationAwareInterface
  *
- * @package Phpro\AnnotatedForms\Configuration
+ * @package Phpro\AnnotatedForms\Options
  */
 interface ConfigurationAwareInterface
 {
 
     /**
-     * @param \Phpro\AnnotatedForms\Configuration\Configuration $configuration
+     * @param \Phpro\AnnotatedForms\Options\Configuration $configuration
      */
     public function setConfiguration($configuration);
 
     /**
-     * @return \Phpro\AnnotatedForms\Configuration\Configuration
+     * @return \Phpro\AnnotatedForms\Options\Configuration
      */
     public function getConfiguration();
 

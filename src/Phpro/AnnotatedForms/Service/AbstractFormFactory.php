@@ -2,8 +2,8 @@
 
 namespace Phpro\AnnotatedForms\Service;
 
-use Phpro\AnnotatedForms\Configuration\Configuration;
-use Phpro\AnnotatedForms\Configuration\ConfigurationAwareInterface;
+use Phpro\AnnotatedForms\Options\Configuration;
+use Phpro\AnnotatedForms\Options\ConfigurationAwareInterface;
 use Zend\EventManager\EventManagerAwareInterface;
 use Zend\ServiceManager\AbstractFactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;

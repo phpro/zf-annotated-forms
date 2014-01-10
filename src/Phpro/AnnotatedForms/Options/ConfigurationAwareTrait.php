@@ -1,11 +1,11 @@
 <?php
 
-namespace Phpro\AnnotatedForms\Configuration;
+namespace Phpro\AnnotatedForms\Options;
 
 /**
  * Class ConfigurationAwareTrait
  *
- * @package Phpro\AnnotatedForms\Configuration
+ * @package Phpro\AnnotatedForms\Options
  */
 trait ConfigurationAwareTrait
 {
@@ -16,7 +16,7 @@ trait ConfigurationAwareTrait
     protected $configuration;
 
     /**
-     * @param \Phpro\AnnotatedForms\Configuration\Configuration $configuration
+     * @param \Phpro\AnnotatedForms\Options\Configuration $configuration
      */
     public function setConfiguration($configuration)
     {
@@ -24,7 +24,7 @@ trait ConfigurationAwareTrait
     }
 
     /**
-     * @return \Phpro\AnnotatedForms\Configuration\Configuration
+     * @return \Phpro\AnnotatedForms\Options\Configuration
      */
     public function getConfiguration()
     {

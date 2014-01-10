@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpro\AnnotatedForms\Configuration;
+namespace Phpro\AnnotatedForms\Options;
 
 use Zend\Cache\Storage\StorageInterface;
 use Zend\EventManager\ListenerAggregateInterface;
@@ -10,7 +10,7 @@ use Zend\Stdlib\AbstractOptions;
 /**
  * Class AnnotatedFormConfiguration
  *
- * @package Phpro\AnnotatedForms\Configuration
+ * @package Phpro\AnnotatedForms\Options
  */
 class Configuration extends AbstractOptions
 {

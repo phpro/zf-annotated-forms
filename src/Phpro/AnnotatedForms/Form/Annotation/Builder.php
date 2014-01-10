@@ -1,8 +1,8 @@
 <?php
 namespace Phpro\AnnotatedForms\Form\Annotation;
 
-use Phpro\AnnotatedForms\Configuration\Configuration;
-use Phpro\AnnotatedForms\Configuration\ConfigurationAwareInterface;
+use Phpro\AnnotatedForms\Options\Configuration;
+use Phpro\AnnotatedForms\Options\ConfigurationAwareInterface;
 use Phpro\AnnotatedForms\Event\FormEvent;
 use Zend\Form\Annotation\AnnotationBuilder as ZendAnnotationBuilder;
 use Zend\Form\Exception;
@@ -22,7 +22,7 @@ class Builder extends ZendAnnotationBuilder
     protected $configuration;
 
     /**
-     * @param \Phpro\AnnotatedForms\Configuration\Configuration $configuration
+     * @param \Phpro\AnnotatedForms\Options\Configuration $configuration
      */
     public function setConfiguration($configuration)
     {
@@ -30,7 +30,7 @@ class Builder extends ZendAnnotationBuilder
     }
 
     /**
-     * @return \Phpro\AnnotatedForms\Configuration\Configuration
+     * @return \Phpro\AnnotatedForms\Options\Configuration
      */
     public function getConfiguration()
     {
