@@ -1,25 +1,27 @@
 <?php
 
-namespace PhproAnnotatedForms\Configuration;
+namespace Phpro\AnnotatedForms\Configuration;
 
 use Zend\Cache\Storage\StorageInterface;
+use Zend\EventManager\ListenerAggregateInterface;
+use Zend\ServiceManager\InitializerInterface;
 use Zend\Stdlib\AbstractOptions;
 
 /**
  * Class AnnotatedFormConfiguration
  *
- * @package PhproAnnotatedForms\Configuration
+ * @package Phpro\AnnotatedForms\Configuration
  */
 class Configuration extends AbstractOptions
 {
 
     /**
-     * @var array
+     * @var InitializerInterface[]
      */
     protected $initializers = array();
 
     /**
-     * @var array
+     * @var ListenerAggregateInterface[]
      */
     protected $listeners = array();
 
@@ -31,7 +33,12 @@ class Configuration extends AbstractOptions
     /**
      * @var string
      */
-    protected $className = '';
+    protected $cacheKey = '';
+
+    /**
+     * @var string
+     */
+    protected $entity = '';
 
     /**
      * @param \Zend\Cache\Storage\StorageInterface $cache
@@ -50,7 +57,31 @@ class Configuration extends AbstractOptions
     }
 
     /**
-     * @param array $initializers
+     * @param string $cacheKey
+     */
+    public function setCacheKey($cacheKey)
+    {
+        $this->cacheKey = $cacheKey;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCacheKey()
+    {
+        return $this->cacheKey;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCacheable()
+    {
+        return $this->getCache() && $this->getCacheKey();
+    }
+
+    /**
+     * @param InitializerInterface[] $initializers
      */
     public function setInitializers($initializers)
     {
@@ -58,7 +89,7 @@ class Configuration extends AbstractOptions
     }
 
     /**
-     * @return array
+     * @return InitializerInterface[]
      */
     public function getInitializers()
     {
@@ -66,7 +97,7 @@ class Configuration extends AbstractOptions
     }
 
     /**
-     * @param array $listeners
+     * @param ListenerAggregateInterface[] $listeners
      */
     public function setListeners($listeners)
     {
@@ -74,7 +105,7 @@ class Configuration extends AbstractOptions
     }
 
     /**
-     * @return array
+     * @return ListenerAggregateInterface[]
      */
     public function getListeners()
     {
@@ -82,19 +113,19 @@ class Configuration extends AbstractOptions
     }
 
     /**
-     * @param string $className
+     * @param string $entity
      */
-    public function setClassName($className)
+    public function setEntity($entity)
     {
-        $this->className = $className;
+        $this->entity = $entity;
     }
 
     /**
      * @return string
      */
-    public function getClassName()
+    public function getEntity()
     {
-        return $this->className;
+        return $this->entity;
     }
 
 }

@@ -21,7 +21,8 @@ return array(
             'initializers' => array(),
             'listeners' => array(),
             'cache' => null,
-            'className' => '',
+            'cache_key' => 'cached-form-key',
+            'entity' => '',
         )
     )
 

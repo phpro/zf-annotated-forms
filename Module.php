@@ -1,3 +1,3 @@
 <?php
 
-require 'src/PhproAnnotatedForms/Module.php';
+require 'src/Phpro/AnnotatedForms/Module.php';
