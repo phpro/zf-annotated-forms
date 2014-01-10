@@ -140,10 +140,11 @@ class ConfigurationFactory
      */
     protected function injectCache(ArrayObject $config)
     {
-        if (!($serviceKey = $config->offsetGet('cache'))) {
+        if (!$config->offsetExists('cache') || !$config->offsetGet('cache')) {
             return;
         }
 
+        $serviceKey = $config->offsetGet('cache');
         $cache = $this->getServiceLocator()->get($serviceKey);
         if (!$cache instanceof StorageInterface) {
             throw new RuntimeException(sprintf('Expected StorageInterface for key "%s"', $serviceKey));
@@ -159,7 +160,7 @@ class ConfigurationFactory
      */
     protected function injectInitializers(ArrayObject $config)
     {
-        if (!$config->offsetGet('initializers')) {
+        if (!$config->offsetExists('initializers') || !$config->offsetGet('initializers')) {
             return;
         }
 
@@ -181,7 +182,7 @@ class ConfigurationFactory
      */
     protected function injectListeners(ArrayObject $config)
     {
-        if (!$config->offsetGet('listeners')) {
+        if (!$config->offsetExists('listeners') || !$config->offsetGet('listeners')) {
             return;
         }
 
