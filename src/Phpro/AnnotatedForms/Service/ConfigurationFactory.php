@@ -171,8 +171,9 @@ class ConfigurationFactory
                 throw new RuntimeException(sprintf('Expected InitializerInterface for key "%s"', $serviceKey));
             }
 
-            $initializers->offsetSet($index, $initializer);
+            $initializers[$index] = $initializer;
         }
+        $config->offsetSet('initializers', $initializers);
     }
 
     /**
@@ -193,8 +194,9 @@ class ConfigurationFactory
                 throw new RuntimeException(sprintf('Expected ListenerAggregateInterface for key "%s"', $serviceKey));
             }
 
-            $listeners->offsetSet($index, $listener);
+            $listeners[$index] = $listener;
         }
+        $config->offsetSet('listeners', $listeners);
     }
 
 }

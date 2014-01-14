@@ -6,7 +6,6 @@ return array(
             'Phpro\AnnotatedForms\Form\Factory' => 'Phpro\AnnotatedForms\Form\Factory',
         ),
         'factories' => array(
-            'Phpro\AnnotatedForms\Listener\CollectionElementListener' => 'Phpro\AnnotatedForms\Listener\CollectionElementListener',
             'Phpro\AnnotatedForms\Service\ConfigurationFactory' => 'Phpro\AnnotatedForms\Service\ConfigurationFactory',
         ),
         'abstract_factories' => array(
