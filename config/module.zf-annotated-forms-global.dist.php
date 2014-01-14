@@ -7,7 +7,9 @@ return array(
     'zf-annotated-forms' => array(
         'defaults' => array(
             'initializers' => array(),
-            'listeners' => array(),
+            'listeners' => array(
+                'Phpro\AnnotatedForms\Listener\CollectionElementListener',
+            ),
             'cache' => null,
             'cache_key' => '',
             'entity' => '',
