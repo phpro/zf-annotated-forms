@@ -20,4 +20,4 @@ interface ConfigurationAwareInterface
      */
     public function getConfiguration();
 
-} 
+}

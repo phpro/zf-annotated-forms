@@ -10,4 +10,4 @@ namespace Phpro\AnnotatedForms\Exception;
 class RuntimeException extends \Exception
 {
 
-} 
+}

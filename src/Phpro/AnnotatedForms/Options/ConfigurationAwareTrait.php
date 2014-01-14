@@ -31,4 +31,4 @@ trait ConfigurationAwareTrait
         return $this->configuration;
     }
 
-} 
+}

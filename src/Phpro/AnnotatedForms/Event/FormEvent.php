@@ -24,4 +24,4 @@ class FormEvent extends Event
     const EVENT_CONFIGURE_ELEMENT_PRE = 'configureElement.pre';
     const EVENT_CONFIGURE_ELEMENT_POST = 'configureElement.post';
 
-} 
+}
