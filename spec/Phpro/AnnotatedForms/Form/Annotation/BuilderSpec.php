@@ -55,7 +55,10 @@ class BuilderSpec extends ObjectBehavior
         $this->getFormSpecification('stdClass');
 
         $eventManager->trigger(Argument::that(function($event) {
-            $validEvents = array('getFormSpecifications.pre', 'getFormSpecifications.post');
+            $validEvents = array(
+                FormEvent::EVENT_FORM_SPECIFICATIONS_PRE,
+                FormEvent::EVENT_FORM_SPECIFICATIONS_POST,
+            );
             return ($event instanceof FormEvent && in_array($event->getName(), $validEvents));
         }))->shouldBeCalledTimes(2);
     }
