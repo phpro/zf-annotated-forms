@@ -9,6 +9,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
+      "doctrine/common": ">=2.1",
       "zendframework/zend-cache": "2.*",
       "zendframework/zend-code": "2.*",
       "zendframework/zend-eventmanager": "2.*",

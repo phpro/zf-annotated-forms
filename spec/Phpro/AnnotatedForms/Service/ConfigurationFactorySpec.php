@@ -86,7 +86,7 @@ class ConfigurationFactorySpec extends ObjectBehavior
     {
         $this->mockServiceLocator($serviceLocator, null, $listener);
         $this->setDefaults(array());
-        $configuration = $this->createConfiguration(array('listeners' => array('listener')));
+        $configuration = $this->createConfiguration(array('listeners' => new \ArrayObject(array('listener'))));
         $listeners = $configuration->getListeners();
         $listeners[0]->shouldBe($listener);
     }
@@ -99,8 +99,8 @@ class ConfigurationFactorySpec extends ObjectBehavior
     {
         $this->mockServiceLocator($serviceLocator, null, null, $initializer);
         $this->setDefaults(array());
-        $configuration = $this->createConfiguration(array('initializers' => array('initializers')));
-        $initializers = $configuration->getListeners();
+        $configuration = $this->createConfiguration(array('initializers' => new \ArrayObject(array('initializer'))));
+        $initializers = $configuration->getInitializers();
         $initializers[0]->shouldBe($initializer);
     }
 
