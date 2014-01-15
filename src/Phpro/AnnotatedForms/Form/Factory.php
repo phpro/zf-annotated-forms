@@ -56,19 +56,13 @@ class Factory extends ZendFormFactory
     }
 
     /**
-     * @param $eventName
-     * @param $subject
-     * @param $params
-     *
-     * @return void
+     * @param       $name
+     * @param       $subject
+     * @param array $params
      */
-    protected function triggerEvent($eventName, $subject, $params = array())
+    protected function triggerEvent($name, $subject, $params = array())
     {
-        $event = new FormEvent($eventName, $subject);
-        foreach ($params as $key => $value) {
-            $event->setParam($key, $value);
-        }
-
+        $event = FormEvent::create($name, $subject, $params);
         $this->getEventManager()->trigger($event);
     }
 

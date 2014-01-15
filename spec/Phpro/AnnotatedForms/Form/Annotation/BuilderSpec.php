@@ -103,6 +103,24 @@ class BuilderSpec extends ObjectBehavior
     }
 
     /**
+     * @param \Zend\EventManager\EventManager $eventManager
+     */
+    public function it_should_trigger_events_while_creating_form($eventManager)
+    {
+        $this->mockConfiguration();
+
+        $this->createForm('stdClass');
+
+        $eventManager->trigger(Argument::that(function($event) {
+            $validEvents = array(
+                FormEvent::EVENT_FORM_CREATE_PRE,
+                FormEvent::EVENT_FORM_CREATE_POST,
+            );
+            return ($event instanceof FormEvent && in_array($event->getName(), $validEvents));
+        }))->shouldBeCalledTimes(2);
+    }
+
+    /**
      * @param \Zend\Cache\Storage\StorageInterface $cache
      * @param string $cacheKey
      *

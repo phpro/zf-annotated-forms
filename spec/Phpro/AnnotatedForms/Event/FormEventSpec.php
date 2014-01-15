@@ -16,4 +16,17 @@ class FormEventSpec extends ObjectBehavior
     {
         $this->shouldHaveType('Zend\EventManager\Event');
     }
+
+    /**
+     * @param stdClass $subject
+     */
+    public function it_should_be_able_to_create_instance($subject)
+    {
+        $event = $this->create('name', $subject, array('param1' => true));
+
+        $event->shouldBeAnInstanceOf('Phpro\AnnotatedForms\Event\FormEvent');
+        $event->getName()->shouldBe('name');
+        $event->getTarget()->shouldReturn($subject);
+        $event->getParam('param1')->shouldBe(true);
+    }
 }

@@ -75,6 +75,7 @@ class AbstractFormFactorySpec extends ObjectBehavior
         // Set correct object states:
         $configuration->getInitializers()->willReturn(array($initializer));
         $formFactory->getFormElementManager()->willReturn($elementManager);
+        $formFactory->setEventManager(Argument::any())->willReturn(true);
 
         // Call service
         $name = 'annotated-form';

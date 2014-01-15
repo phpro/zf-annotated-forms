@@ -4,6 +4,9 @@ return array(
         'invokables' => array(
             'Phpro\AnnotatedForms\Form\Annotation\Builder' => 'Phpro\AnnotatedForms\Form\Annotation\Builder',
             'Phpro\AnnotatedForms\Form\Factory' => 'Phpro\AnnotatedForms\Form\Factory',
+
+            // Listeners:
+            'Phpro\AnnotatedForms\Listener\PrepareListener' => 'Phpro\AnnotatedForms\Listener\PrepareListener',
         ),
         'factories' => array(
             'Phpro\AnnotatedForms\Service\ConfigurationFactory' => 'Phpro\AnnotatedForms\Service\ConfigurationFactory',

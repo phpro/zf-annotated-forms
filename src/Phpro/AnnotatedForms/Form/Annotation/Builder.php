@@ -6,6 +6,7 @@ use Phpro\AnnotatedForms\Options\ConfigurationAwareInterface;
 use Phpro\AnnotatedForms\Event\FormEvent;
 use Zend\Form\Annotation\AnnotationBuilder as ZendAnnotationBuilder;
 use Zend\Form\Exception;
+use Zend\Stdlib\ArrayUtils;
 
 /**
  * Class Builder
@@ -38,6 +39,20 @@ class Builder extends ZendAnnotationBuilder
     }
 
     /**
+     * @param object|string $entity
+     *
+     * @return void|\Zend\Form\Form
+     */
+    public function createForm($entity)
+    {
+        $this->triggerEvent(FormEvent::EVENT_FORM_CREATE_PRE, $this, array('entity' => $entity));
+        $form = parent::createForm($entity);
+        $this->triggerEvent(FormEvent::EVENT_FORM_CREATE_POST, $form, array('entity' => $entity));
+
+        return $form;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function getFormSpecification($entity)
@@ -47,9 +62,9 @@ class Builder extends ZendAnnotationBuilder
         $cacheKey = $config->getCacheKey();
 
         // Pre event
-        $event = new FormEvent(FormEvent::EVENT_FORM_SPECIFICATIONS_PRE, $this);
-        $event->setParam('cacheKey', $cacheKey);
-        $this->getEventManager()->trigger($event);
+        $this->triggerEvent(FormEvent::EVENT_FORM_SPECIFICATIONS_PRE, $this, array(
+            'cacheKey' => $cacheKey,
+        ));
 
         // Load form specs:
         if ($config->isCacheable() && $cache->hasItem($cacheKey)) {
@@ -67,13 +82,24 @@ class Builder extends ZendAnnotationBuilder
             }
         }
 
-        // post event
-        $event = new FormEvent(FormEvent::EVENT_FORM_SPECIFICATIONS_POST, $this);
-        $event->setParam('cacheKey', $cacheKey);
-        $event->setParam('formSpec', $formSpec);
-        $this->getEventManager()->trigger($event);
+        // Post event
+        $this->triggerEvent(FormEvent::EVENT_FORM_SPECIFICATIONS_POST, $this, array(
+            'cacheKey' => $cacheKey,
+            'formSpec' => $formSpec)
+        );
 
         return $formSpec;
+    }
+
+    /**
+     * @param       $name
+     * @param       $subject
+     * @param array $params
+     */
+    protected function triggerEvent($name, $subject, $params = array())
+    {
+        $event = FormEvent::create($name, $subject, $params);
+        $this->getEventManager()->trigger($event);
     }
 
 }
