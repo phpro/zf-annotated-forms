@@ -81,6 +81,7 @@ class AbstractFormFactorySpec extends ObjectBehavior
         $name = 'annotated-form';
         $this->createServiceWithName($serviceLocator, $name, $name)->shouldReturn($form);
         $elementManager->addInitializer($initializer)->shouldBeCalled();
+        $elementManager->setServiceLocator($serviceLocator)->shouldBeCalled();
     }
 
     /**
@@ -101,6 +102,7 @@ class AbstractFormFactorySpec extends ObjectBehavior
         // Set correct object states:
         $configuration->getListeners()->willReturn(array($listener));
         $annotationBuilder->getEventManager()->willReturn($eventManager);
+        $formFactory->setEventManager($eventManager)->willReturn();
 
         $name = 'annotated-form';
         $this->createServiceWithName($serviceLocator, $name, $name)->shouldReturn($form);
@@ -120,6 +122,7 @@ class AbstractFormFactorySpec extends ObjectBehavior
         $prophet = new Prophet();
         $formFactory = $prophet->prophesize('Phpro\AnnotatedForms\Form\Factory');
         $formFactory->willImplement('Phpro\AnnotatedForms\Options\ConfigurationAwareInterface');
+        $formFactory->setConfiguration(Argument::any())->willReturn();
 
         $this->mockServices($serviceLocator, $configurationService, $annotationBuilder, $formFactory, $configuration);
         $annotationBuilder->createForm('entity')->willReturn($form);
@@ -207,6 +210,11 @@ class AbstractFormFactorySpec extends ObjectBehavior
         // Mock Form Factory
         $serviceLocator->has('Phpro\AnnotatedForms\Form\Factory')->willReturn(true);
         $serviceLocator->get('Phpro\AnnotatedForms\Form\Factory')->willReturn($formFactory);
+        $formFactory->setEventManager($eventManager)->willReturn(true);
+
+        // Mock defalt elementManager
+        $elementManager = $prophet->prophesize('Zend\Form\FormElementManager');
+        $formFactory->getFormElementManager()->willReturn($elementManager->reveal());
 
         $this->mockConfiguration($serviceLocator);
     }

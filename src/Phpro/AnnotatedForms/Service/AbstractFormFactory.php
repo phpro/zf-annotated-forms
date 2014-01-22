@@ -127,6 +127,7 @@ class AbstractFormFactory implements AbstractFactoryInterface
 
         // Add custom form element initializers
         $elementManager = $formFactory->getFormElementManager();
+        $elementManager->setServiceLocator($serviceLocator);
         foreach ($config->getInitializers() as $initializer) {
             $elementManager->addInitializer($initializer);
         }
