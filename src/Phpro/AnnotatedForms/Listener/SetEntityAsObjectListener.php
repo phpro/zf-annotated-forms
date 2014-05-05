@@ -43,7 +43,9 @@ class SetEntityAsObjectListener extends AbstractListenerAggregate
         }
 
         $rc = new \ReflectionClass($config->getEntity());
-        $instance = $rc->newInstanceWithoutConstructor();
+        $hasConstructorparams = ($rc->getConstructor() && $rc->getConstructor()->getNumberOfParameters()) ? true : false;
+        $instance =  $hasConstructorparams ? $rc->newInstanceWithoutConstructor() : $rc->newInstance();
+
         $form->setObject($instance);
     }
 
