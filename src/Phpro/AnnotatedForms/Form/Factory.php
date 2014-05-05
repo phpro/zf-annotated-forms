@@ -5,10 +5,8 @@ namespace Phpro\AnnotatedForms\Form;
 use Phpro\AnnotatedForms\Event\FormEvent;
 use Phpro\AnnotatedForms\Options\ConfigurationAwareInterface;
 use Phpro\AnnotatedForms\Options\ConfigurationAwareTrait;
-use Zend\EventManager\EventManager;
 use Zend\EventManager\EventManagerAwareInterface;
-use Zend\EventManager\EventManagerInterface;
-use Zend\EventManager\ProvidesEvents;
+use Zend\EventManager\EventManagerAwareTrait;
 use Zend\Form\ElementInterface;
 use Zend\Form\Exception;
 use Zend\Form\Factory as ZendFormFactory;
@@ -24,7 +22,7 @@ class Factory extends ZendFormFactory
     implements EventManagerAwareInterface, ConfigurationAwareInterface
 {
 
-    use ConfigurationAwareTrait, ProvidesEvents;
+    use ConfigurationAwareTrait, EventManagerAwareTrait;
 
     /**
      * @param       $name
