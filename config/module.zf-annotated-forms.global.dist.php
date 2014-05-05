@@ -8,7 +8,9 @@ return array(
         'defaults' => array(
             'initializers' => array(),
             'listeners' => array(
+                'Phpro\AnnotatedForms\Listener\ConfigureCollectionInputFilterListener',
                 'Phpro\AnnotatedForms\Listener\PrepareListener',
+                'Phpro\AnnotatedForms\Listener\SetEntityAsObjectListener',
             ),
             'cache' => null,
         ),

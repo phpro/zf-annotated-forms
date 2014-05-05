@@ -76,6 +76,7 @@ class AbstractFormFactorySpec extends ObjectBehavior
         $configuration->getInitializers()->willReturn(array($initializer));
         $formFactory->getFormElementManager()->willReturn($elementManager);
         $formFactory->setEventManager(Argument::any())->willReturn(true);
+        $formFactory->setConfiguration(Argument::any())->shouldBeCalled();
 
         // Call service
         $name = 'annotated-form';
@@ -103,6 +104,7 @@ class AbstractFormFactorySpec extends ObjectBehavior
         $configuration->getListeners()->willReturn(array($listener));
         $annotationBuilder->getEventManager()->willReturn($eventManager);
         $formFactory->setEventManager($eventManager)->willReturn();
+        $formFactory->setConfiguration(Argument::any())->shouldBeCalled();
 
         $name = 'annotated-form';
         $this->createServiceWithName($serviceLocator, $name, $name)->shouldReturn($form);
@@ -152,6 +154,7 @@ class AbstractFormFactorySpec extends ObjectBehavior
         $name = 'annotated-form';
         $this->createServiceWithName($serviceLocator, $name, $name)->shouldReturn($form);
         $formFactory->setEventManager($configuration)->shouldBeCalled();
+        $formFactory->setConfiguration(Argument::any())->shouldBeCalled();
     }
 
     /**
@@ -211,6 +214,7 @@ class AbstractFormFactorySpec extends ObjectBehavior
         $serviceLocator->has('Phpro\AnnotatedForms\Form\Factory')->willReturn(true);
         $serviceLocator->get('Phpro\AnnotatedForms\Form\Factory')->willReturn($formFactory);
         $formFactory->setEventManager($eventManager)->willReturn(true);
+        $formFactory->setConfiguration(Argument::any())->shouldBeCalled();
 
         // Mock defalt elementManager
         $elementManager = $prophet->prophesize('Zend\Form\FormElementManager');

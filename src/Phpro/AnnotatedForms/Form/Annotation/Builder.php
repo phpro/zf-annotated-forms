@@ -84,8 +84,9 @@ class Builder extends ZendAnnotationBuilder
 
         // Post event
         $this->triggerEvent(FormEvent::EVENT_FORM_SPECIFICATIONS_POST, $this, array(
-            'cacheKey' => $cacheKey,
-            'formSpec' => $formSpec)
+                'cacheKey' => $cacheKey,
+                'formSpec' => $formSpec,
+            )
         );
 
         return $formSpec;
@@ -98,7 +99,7 @@ class Builder extends ZendAnnotationBuilder
      */
     protected function triggerEvent($name, $subject, $params = array())
     {
-        $event = FormEvent::create($name, $subject, $params);
+        $event = FormEvent::create($name, $subject, $this->getConfiguration(), $params);
         $this->getEventManager()->trigger($event);
     }
 

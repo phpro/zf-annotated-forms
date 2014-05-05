@@ -3,9 +3,12 @@
 namespace Phpro\AnnotatedForms\Form;
 
 use Phpro\AnnotatedForms\Event\FormEvent;
+use Phpro\AnnotatedForms\Options\ConfigurationAwareInterface;
+use Phpro\AnnotatedForms\Options\ConfigurationAwareTrait;
 use Zend\EventManager\EventManager;
 use Zend\EventManager\EventManagerAwareInterface;
 use Zend\EventManager\EventManagerInterface;
+use Zend\EventManager\ProvidesEvents;
 use Zend\Form\ElementInterface;
 use Zend\Form\Exception;
 use Zend\Form\Factory as ZendFormFactory;
@@ -18,42 +21,10 @@ use Zend\Form\FormInterface;
  * @package Phpro\AnnotatedForms\Form
  */
 class Factory extends ZendFormFactory
-    implements EventManagerAwareInterface
+    implements EventManagerAwareInterface, ConfigurationAwareInterface
 {
 
-    /**
-     * @var EventManagerInterface
-     */
-    protected $events;
-
-    /**
-     * Set the event manager instance used by this context
-     *
-     * @param  EventManagerInterface $events
-     * @return mixed
-     */
-    public function setEventManager(EventManagerInterface $events)
-    {
-        $identifiers = array(__CLASS__, get_class($this));
-        $events->setIdentifiers($identifiers);
-        $this->events = $events;
-        return $this;
-    }
-
-    /**
-     * Retrieve the event manager
-     *
-     * Lazy-loads an EventManager instance if none registered.
-     *
-     * @return EventManagerInterface
-     */
-    public function getEventManager()
-    {
-        if (!$this->events instanceof EventManagerInterface) {
-            $this->setEventManager(new EventManager());
-        }
-        return $this->events;
-    }
+    use ConfigurationAwareTrait, ProvidesEvents;
 
     /**
      * @param       $name
@@ -62,7 +33,7 @@ class Factory extends ZendFormFactory
      */
     protected function triggerEvent($name, $subject, $params = array())
     {
-        $event = FormEvent::create($name, $subject, $params);
+        $event = FormEvent::create($name, $subject, $this->getConfiguration(), $params);
         $this->getEventManager()->trigger($event);
     }
 

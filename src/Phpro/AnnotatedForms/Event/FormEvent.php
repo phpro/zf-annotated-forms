@@ -3,6 +3,9 @@
 namespace Phpro\AnnotatedForms\Event;
 
 
+use Phpro\AnnotatedForms\Options\Configuration;
+use Phpro\AnnotatedForms\Options\ConfigurationAwareInterface;
+use Phpro\AnnotatedForms\Options\ConfigurationAwareTrait;
 use Zend\EventManager\Event;
 
 
@@ -12,6 +15,7 @@ use Zend\EventManager\Event;
  * @package Phpro\AnnotatedForms\Event
  */
 class FormEvent extends Event
+    implements ConfigurationAwareInterface
 {
 
     // Form AnnotationBuilder events:
@@ -28,17 +32,20 @@ class FormEvent extends Event
     const EVENT_CONFIGURE_ELEMENT_PRE = 'configureElement.pre';
     const EVENT_CONFIGURE_ELEMENT_POST = 'configureElement.post';
 
+    use ConfigurationAwareTrait;
 
     /**
-     * @param       $name
-     * @param       $subject
+     * @param $name
+     * @param $subject
+     * @param Configuration $configuration
      * @param array $params
      *
      * @return FormEvent
      */
-    public static function create($name, $subject, $params = array())
+    public static function create($name, $subject, $configuration, $params = array())
     {
         $event = new self($name, $subject);
+        $event->setConfiguration($configuration);
         foreach ($params as $key => $value) {
             $event->setParam($key, $value);
         }

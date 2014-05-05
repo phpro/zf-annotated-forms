@@ -5,9 +5,12 @@ namespace spec\Phpro\AnnotatedForms\Form;
 use Phpro\AnnotatedForms\Event\FormEvent;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use spec\Phpro\AnnotatedForms\Options\ProvidesConfigurationTraitSpec;
 
 class FactorySpec extends ObjectBehavior
 {
+
+    use ProvidesConfigurationTraitSpec;
 
     /**
      * @param \Zend\EventManager\EventManager $eventManager

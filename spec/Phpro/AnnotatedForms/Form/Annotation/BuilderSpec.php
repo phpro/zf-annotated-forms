@@ -6,9 +6,12 @@ use Phpro\AnnotatedForms\Event\FormEvent;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Prophecy\Prophet;
+use spec\Phpro\AnnotatedForms\Options\ProvidesConfigurationTraitSpec;
 
 class BuilderSpec extends ObjectBehavior
 {
+
+    use ProvidesConfigurationTraitSpec;
 
     /**
      * @param \Zend\EventManager\EventManager $eventManager
@@ -31,24 +34,10 @@ class BuilderSpec extends ObjectBehavior
         $this->shouldHaveType('Zend\Form\Annotation\AnnotationBuilder');
     }
 
-    public function it_should_implement_configuration_aware_interface()
-    {
-        $this->shouldImplement('Phpro\AnnotatedForms\Options\ConfigurationAwareInterface');
-    }
-
-    /**
-     * @param \Phpro\AnnotatedForms\Options\Configuration $configuration
-     */
-    public function it_should_have_configuration($configuration)
-    {
-        $this->setConfiguration($configuration);
-        $this->getConfiguration()->shouldReturn($configuration);
-    }
-
     /**
      * @param \Zend\EventManager\EventManager $eventManager
      */
-    public function it_should_trigger_events_befor_and_after_retrieving_form_specifications($eventManager)
+    public function it_should_trigger_events_before_and_after_retrieving_form_specifications($eventManager)
     {
         $this->mockConfiguration();
 

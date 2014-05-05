@@ -6,7 +6,9 @@ return array(
             'Phpro\AnnotatedForms\Form\Factory' => 'Phpro\AnnotatedForms\Form\Factory',
 
             // Listeners:
+            'Phpro\AnnotatedForms\Listener\ConfigureCollectionInputFilterListener' => 'Phpro\AnnotatedForms\Listener\ConfigureCollectionInputFilterListener',
             'Phpro\AnnotatedForms\Listener\PrepareListener' => 'Phpro\AnnotatedForms\Listener\PrepareListener',
+            'Phpro\AnnotatedForms\Listener\SetEntityAsObjectListener' => 'Phpro\AnnotatedForms\Listener\SetEntityAsObjectListener',
         ),
         'factories' => array(
             'Phpro\AnnotatedForms\Service\ConfigurationFactory' => 'Phpro\AnnotatedForms\Service\ConfigurationFactory',
