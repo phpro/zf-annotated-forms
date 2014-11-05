@@ -81,6 +81,17 @@ class Configuration extends AbstractOptions
     }
 
     /**
+     * @param mixed $entity
+     *
+     * @return bool
+     */
+    public function isCacheableEntity($entity)
+    {
+        $entity = is_object($entity) ? get_class($entity) : $entity;
+        return $this->isCacheable() && $this->getEntity() === $entity;
+    }
+
+    /**
      * @param InitializerInterface[] $initializers
      */
     public function setInitializers($initializers)

@@ -121,7 +121,7 @@ class BuilderSpec extends ObjectBehavior
         $configuration = $prophet->prophesize('\Phpro\AnnotatedForms\Options\Configuration');
         $configuration->getCache()->willReturn($cache);
         $configuration->getCacheKey()->willReturn($cacheKey);
-        $configuration->isCacheable()->willReturn($cache && $cacheKey);
+        $configuration->isCacheableEntity(Argument::any())->willReturn($cache && $cacheKey);
 
         $this->setConfiguration($configuration->reveal());
         return $configuration;

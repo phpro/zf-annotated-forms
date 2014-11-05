@@ -53,6 +53,10 @@ class Builder extends ZendAnnotationBuilder
     }
 
     /**
+     * Note:
+     * Only save to / load from cache if it is the specified entity.
+     * Otherwise strange stuff will happen when using fieldsets and collections.
+     *
      * {@inheritDoc}
      */
     public function getFormSpecification($entity)
@@ -66,14 +70,16 @@ class Builder extends ZendAnnotationBuilder
             'cacheKey' => $cacheKey,
         ));
 
-        // Load form specs:
-        if ($config->isCacheable() && $cache->hasItem($cacheKey)) {
+        // Load form specs from cache:
+        if ($config->isCacheableEntity($entity) && $cache->hasItem($cacheKey)) {
             $formSpec = $cache->getItem($cacheKey);
+
+        // Parse form specs:
         } else {
             $formSpec = parent::getFormSpecification($entity);
 
             // Save cache:
-            if ($config->isCacheable()) {
+            if ($config->isCacheableEntity($entity)) {
                 try {
                     $cache->setItem($cacheKey, $formSpec);
                 } catch (\Exception $e) {

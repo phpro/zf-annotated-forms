@@ -45,6 +45,20 @@ class ConfigurationSpec extends ObjectBehavior
         $this->isCacheable()->shouldReturn(true);
     }
 
+    /**
+     * @param \Zend\Cache\Storage\StorageInterface $cache
+     */
+    public function it_should_know_if_a_specified_entity_is_cachable($cache)
+    {
+        $entityName = 'Custom\Form\Class';
+        $this->setCache($cache);
+        $this->setCacheKey('cache-key');
+        $this->setEntity($entityName);
+
+        $this->isCacheableEntity('Custom\Form\WrongClass')->shouldReturn(false);
+        $this->isCacheableEntity($entityName)->shouldReturn(true);
+    }
+
     public function it_should_have_entity()
     {
         $entity = 'entity';
