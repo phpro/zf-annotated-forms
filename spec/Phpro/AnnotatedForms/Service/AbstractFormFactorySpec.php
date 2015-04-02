@@ -45,12 +45,13 @@ class AbstractFormFactorySpec extends ObjectBehavior
      * @param \Phpro\AnnotatedForms\Service\ConfigurationFactory $configurationService
      * @param \Phpro\AnnotatedForms\Form\Annotation\Builder $annotationBuilder
      * @param \Phpro\AnnotatedForms\Form\Factory $formFactory
+     * @param \Zend\Form\FormElementManager $formElementManager
      * @param \Zend\Form\Form $form
      * @param \Phpro\AnnotatedForms\Options\Configuration $configuration
      */
-    public function it_should_create_annotated_services($serviceLocator, $configurationService, $annotationBuilder, $formFactory, $form, $configuration)
+    public function it_should_create_annotated_services($serviceLocator, $configurationService, $annotationBuilder, $formFactory, $formElementManager, $form, $configuration)
     {
-        $this->mockServices($serviceLocator, $configurationService, $annotationBuilder, $formFactory, $configuration);
+        $this->mockServices($serviceLocator, $configurationService, $annotationBuilder, $formFactory, $formElementManager, $configuration);
         $annotationBuilder->createForm('entity')->willReturn($form);
 
         $name = 'annotated-form';
@@ -62,27 +63,26 @@ class AbstractFormFactorySpec extends ObjectBehavior
      * @param \Phpro\AnnotatedForms\Service\ConfigurationFactory $configurationService
      * @param \Phpro\AnnotatedForms\Form\Annotation\Builder $annotationBuilder
      * @param \Phpro\AnnotatedForms\Form\Factory $formFactory
+     * @param \Zend\Form\FormElementManager $formElementManager
      * @param \Zend\Form\Form $form
      * @param \Phpro\AnnotatedForms\Options\Configuration $configuration
-     * @param \Zend\Form\FormElementManager $elementManager
      * @param \Zend\ServiceManager\InitializerInterface $initializer
      */
-    public function it_should_add_initializers_to_elementManager($serviceLocator, $configurationService, $annotationBuilder, $formFactory, $form, $configuration, $elementManager, $initializer)
+    public function it_should_add_initializers_to_elementManager($serviceLocator, $configurationService, $annotationBuilder, $formFactory, $formElementManager, $form, $configuration, $initializer)
     {
-        $this->mockServices($serviceLocator, $configurationService, $annotationBuilder, $formFactory, $configuration);
+        $this->mockServices($serviceLocator, $configurationService, $annotationBuilder, $formFactory, $formElementManager, $configuration);
         $annotationBuilder->createForm('entity')->willReturn($form);
 
         // Set correct object states:
         $configuration->getInitializers()->willReturn(array($initializer));
-        $formFactory->getFormElementManager()->willReturn($elementManager);
+        $formFactory->getFormElementManager()->willReturn($formElementManager);
         $formFactory->setEventManager(Argument::any())->willReturn(true);
         $formFactory->setConfiguration(Argument::any())->shouldBeCalled();
 
         // Call service
         $name = 'annotated-form';
         $this->createServiceWithName($serviceLocator, $name, $name)->shouldReturn($form);
-        $elementManager->addInitializer($initializer)->shouldBeCalled();
-        $elementManager->setServiceLocator($serviceLocator)->shouldBeCalled();
+        $formElementManager->addInitializer($initializer)->shouldBeCalled();
     }
 
     /**
@@ -90,14 +90,16 @@ class AbstractFormFactorySpec extends ObjectBehavior
      * @param \Phpro\AnnotatedForms\Service\ConfigurationFactory $configurationService
      * @param \Phpro\AnnotatedForms\Form\Annotation\Builder $annotationBuilder
      * @param \Phpro\AnnotatedForms\Form\Factory $formFactory
+     * @param \Zend\Form\FormElementManager $formElementManager
      * @param \Zend\Form\Form $form
      * @param \Phpro\AnnotatedForms\Options\Configuration $configuration
      * @param \Zend\EventManager\EventManager $eventManager
      * @param \Zend\EventManager\ListenerAggregateInterface $listener
      */
-    public function it_should_add_listeners_to_eventManager($serviceLocator, $configurationService, $annotationBuilder, $formFactory, $form, $configuration, $eventManager, $listener)
+    public function it_should_add_listeners_to_eventManager($serviceLocator, $configurationService, $annotationBuilder, $formFactory, $formElementManager, $form, $configuration, $eventManager, $listener)
     {
-        $this->mockServices($serviceLocator, $configurationService, $annotationBuilder, $formFactory, $configuration);
+        $this->mockServices($serviceLocator, $configurationService, $annotationBuilder, $formFactory, $formElementManager, $configuration);
+
         $annotationBuilder->createForm('entity')->willReturn($form);
 
         // Set correct object states:
@@ -115,10 +117,11 @@ class AbstractFormFactorySpec extends ObjectBehavior
      * @param \Zend\ServiceManager\ServiceLocatorInterface$serviceLocator
      * @param \Phpro\AnnotatedForms\Service\ConfigurationFactory $configurationService
      * @param \Phpro\AnnotatedForms\Form\Annotation\Builder $annotationBuilder
+     * @param \Zend\Form\FormElementManager $formElementManager
      * @param \Zend\Form\Form $form
      * @param \Phpro\AnnotatedForms\Options\Configuration $configuration
      */
-    public function it_should_add_configuration_to_form_factory($serviceLocator, $configurationService, $annotationBuilder, $form, $configuration)
+    public function it_should_add_configuration_to_form_factory($serviceLocator, $configurationService, $annotationBuilder, $formElementManager, $form, $configuration)
     {
         // Make sure form factory implements ConfigurationAwareInterface
         $prophet = new Prophet();
@@ -126,7 +129,8 @@ class AbstractFormFactorySpec extends ObjectBehavior
         $formFactory->willImplement('Phpro\AnnotatedForms\Options\ConfigurationAwareInterface');
         $formFactory->setConfiguration(Argument::any())->willReturn();
 
-        $this->mockServices($serviceLocator, $configurationService, $annotationBuilder, $formFactory, $configuration);
+        $this->mockServices($serviceLocator, $configurationService, $annotationBuilder, $formFactory, $formElementManager, $configuration);
+
         $annotationBuilder->createForm('entity')->willReturn($form);
 
         $name = 'annotated-form';
@@ -138,17 +142,18 @@ class AbstractFormFactorySpec extends ObjectBehavior
      * @param \Zend\ServiceManager\ServiceLocatorInterface$serviceLocator
      * @param \Phpro\AnnotatedForms\Service\ConfigurationFactory $configurationService
      * @param \Phpro\AnnotatedForms\Form\Annotation\Builder $annotationBuilder
+     * @param \Zend\Form\FormElementManager $formElementManager
      * @param \Zend\Form\Form $form
      * @param \Phpro\AnnotatedForms\Options\Configuration $configuration
      */
-    public function it_should_add_eventManager_to_form_factory($serviceLocator, $configurationService, $annotationBuilder, $form, $configuration)
+    public function it_should_add_eventManager_to_form_factory($serviceLocator, $configurationService, $annotationBuilder, $formElementManager, $form, $configuration)
     {
         // Make sure form factory implements ConfigurationAwareInterface
         $prophet = new Prophet();
         $formFactory = $prophet->prophesize('Phpro\AnnotatedForms\Form\Factory');
         $formFactory->willImplement('Zend\EventManager\EventManagerAwareInterface');
 
-        $this->mockServices($serviceLocator, $configurationService, $annotationBuilder, $formFactory, $configuration);
+        $this->mockServices($serviceLocator, $configurationService, $annotationBuilder, $formFactory, $formElementManager, $configuration);
         $annotationBuilder->createForm('entity')->willReturn($form);
 
         $name = 'annotated-form';
@@ -183,9 +188,10 @@ class AbstractFormFactorySpec extends ObjectBehavior
      * @param \Phpro\AnnotatedForms\Service\ConfigurationFactory $configurationService
      * @param \Phpro\AnnotatedForms\Form\Annotation\Builder $annotationBuilder
      * @param \Phpro\AnnotatedForms\Form\Factory $formFactory
+     * @param \Zend\Form\FormElementManager $formElementManager
      * @param \Phpro\AnnotatedForms\Options\Configuration $configuration
      */
-    protected function mockServices($serviceLocator, $configurationService, $annotationBuilder, $formFactory, $configuration)
+    protected function mockServices($serviceLocator, $configurationService, $annotationBuilder, $formFactory, $formElementManager, $configuration)
     {
         $prophet = new Prophet();
 
@@ -210,15 +216,16 @@ class AbstractFormFactorySpec extends ObjectBehavior
         $annotationBuilder->getEventManager()->willReturn($eventManager->reveal());
         $annotationBuilder->setFormFactory($formFactory)->willReturn(true);
 
+        // Mock FormElementManager
+        $serviceLocator->has('FormElementManager')->willReturn(true);
+        $serviceLocator->get('FormElementManager')->willReturn($formElementManager);
+
         // Mock Form Factory
         $serviceLocator->has('Phpro\AnnotatedForms\Form\Factory')->willReturn(true);
         $serviceLocator->get('Phpro\AnnotatedForms\Form\Factory')->willReturn($formFactory);
         $formFactory->setEventManager($eventManager)->willReturn(true);
         $formFactory->setConfiguration(Argument::any())->shouldBeCalled();
-
-        // Mock defalt elementManager
-        $elementManager = $prophet->prophesize('Zend\Form\FormElementManager');
-        $formFactory->getFormElementManager()->willReturn($elementManager->reveal());
+        $formFactory->setFormElementManager($formElementManager->getWrappedObject())->shouldBeCalled();
 
         $this->mockConfiguration($serviceLocator);
     }
