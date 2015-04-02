@@ -122,12 +122,13 @@ class AbstractFormFactory implements AbstractFactoryInterface
      */
     protected function loadFormFactory(ServiceLocatorInterface $serviceLocator, Configuration $config)
     {
+        $elementManager = $serviceLocator->get('FormElementManager');
+
         /** @var \Phpro\AnnotatedForms\Form\Factory $formFactory */
         $formFactory = $serviceLocator->get('Phpro\AnnotatedForms\Form\Factory');
+        $formFactory->setFormElementManager($elementManager);
 
         // Add custom form element initializers
-        $elementManager = $formFactory->getFormElementManager();
-        $elementManager->setServiceLocator($serviceLocator);
         foreach ($config->getInitializers() as $initializer) {
             $elementManager->addInitializer($initializer);
         }
